@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Poslovna4Real.Models.NaseljenoMesto>
+
+@{
+    ViewBag.Title = "Naseljena mesta";
+}
+
+<h2>Naseljena mesta</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<button id="filter" class="btn">Run Filter</button>
+<script>
+    var filter = document.getElementById("filter");
+    filter.onclick = function () {
+        window.location = "/NaseljenaMesta/FilteredIndex?naziv=" + $("#naziv").val() + "&drzavaNaziv=" + $("#drzavaNaziv").val() + "&ptt=" + $("#ptt").val();
+    }
+</script>
+<table class="table">
+    <tr>
+        <th>
+          <!--@Html.DisplayNameFor(model => model.Drzava.Naziv)-->  
+            Drzava naziv
+            <input id="drzavaNaziv" placeholder="filter" type="text" />
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PTT)
+            <input id="ptt" placeholder="filter" type="text" />
+        </th>
+        <th>
+          <!--@Html.DisplayNameFor(model => model.Naziv)-->  
+            Naziv
+             <input id="naziv" placeholder="filter" type="text"/>
+        </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Drzava.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PTT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naziv)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

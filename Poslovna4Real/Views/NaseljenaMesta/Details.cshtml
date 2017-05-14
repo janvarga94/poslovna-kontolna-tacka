@@ -1,0 +1,42 @@
+﻿@model Poslovna4Real.Models.NaseljenoMesto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NaseljenoMesto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Drzava.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Drzava.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PTT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PTT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
