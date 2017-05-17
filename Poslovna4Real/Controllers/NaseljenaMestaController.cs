@@ -54,7 +54,7 @@ namespace Poslovna4Real.Controllers
         public ActionResult Create()
         {
             ViewBag.DrzavaId = new SelectList(db.Drzavas, "Id", "Naziv");
-            return View();
+            return View(new NaseljenoMestoISveDrzave() { SveDrzave = db.Drzavas.ToList() });
         }
 
         // POST: NaseljenaMesta/Create

@@ -1,4 +1,5 @@
-﻿@model Poslovna4Real.Models.NaseljenoMesto
+﻿@model Poslovna4Real.Models.NaseljenoMestoISveDrzave
+
 
 @{
     ViewBag.Title = "Create";
@@ -16,32 +17,71 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.PTT, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NaseljenoMesto.PTT, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PTT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PTT, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NaseljenoMesto.PTT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NaseljenoMesto.PTT, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NaseljenoMesto.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NaseljenoMesto.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NaseljenoMesto.Naziv, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DrzavaId, "DrzavaId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NaseljenoMesto.DrzavaId, "DrzavaId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("DrzavaId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DrzavaId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.NaseljenoMesto.DrzavaId, "", new { @class = "text-danger" })
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">...</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.NaseljenoMesto.Drzava.Naziv)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+
+                                    @foreach (var item in Model.SveDrzave)
+                                    {
+                                        <tr onclick="rowClicked(@item.Id,'@item.Naziv')">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Naziv)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input onclick="submitTHing()" type="button" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -54,3 +94,25 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+<script>
+    function rowClicked(id, naziv) {
+        $('#myModal').modal('hide');
+        $('#DrzavaId').val(id);
+    }
+
+    function submitTHing() {
+        var values = {};
+        $.each($(document.forms[0]).serializeArray(), function (i, field) {
+            values[field.name] = field.value;
+        });
+        var form = $("form").first();
+        var input = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", "NaseljenoMesto.DrzavaId").val(values['DrzavaId']);
+        form.append($(input));
+        form.submit();
+        console.log(values);
+    }
+</script>
